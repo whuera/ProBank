@@ -19,12 +19,12 @@ export const Navbar: React.FC = () => {
 
                 <div className={styles.links}>
                     <Link href="/banca-personas" className={styles.link}>Banca Personas</Link>
-                    <Link href="#features" className={styles.link}>Features</Link>
-                    <Link href="#solutions" className={styles.link}>Solutions</Link>
+                    <Link href="#features" className={styles.link}>Características</Link>
+                    <Link href="#solutions" className={styles.link}>Soluciones</Link>
                 </div>
 
                 <div className={styles.actions}>
-                    <Button variant="ghost" size="sm">Login</Button>
+                    <Button variant="ghost" size="sm">Ingresar</Button>
                     <Link href="/registro">
                         <Button variant="primary" size="sm">Hacerse Cliente</Button>
                     </Link>

@@ -10,15 +10,15 @@ export default function Home() {
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1 className={`${styles.title} animate-fade-in`}>
-            The Future of <span className={styles.gradientText}>Banking</span> is Here
+            El Futuro de la <span className={styles.gradientText}>Banca</span> ya está aquí
           </h1>
           <p className={`${styles.description} animate-fade-in`}>
-            Experience a seamless, secure, and elegant way to manage your finances.
-            Join thousands of users who trust ProBank for their daily transactions.
+            Experimenta una forma fluida, segura y elegante de gestionar tus finanzas.
+            Únete a miles de usuarios que confían en ProBank para sus transacciones diarias.
           </p>
           <div className={`${styles.cta} animate-fade-in`}>
-            <Button size="lg">Open Account</Button>
-            <Button variant="secondary" size="lg">Learn More</Button>
+            <Button size="lg">Abrir Cuenta</Button>
+            <Button variant="secondary" size="lg">Saber Más</Button>
           </div>
         </div>
 
@@ -31,11 +31,11 @@ export default function Home() {
             <div className={styles.cardNumber}>**** **** **** 4242</div>
             <div className={styles.cardFooter}>
               <div>
-                <div className={styles.cardLabel}>Card Holder</div>
+                <div className={styles.cardLabel}>Titular</div>
                 <div className={styles.cardValue}>ALEX RIVERA</div>
               </div>
               <div>
-                <div className={styles.cardLabel}>Expires</div>
+                <div className={styles.cardLabel}>Vence</div>
                 <div className={styles.cardValue}>12/28</div>
               </div>
             </div>
@@ -44,22 +44,22 @@ export default function Home() {
       </section>
 
       <section id="features" className={styles.features}>
-        <h2 className={styles.sectionTitle}>Why Choose ProBank?</h2>
+        <h2 className={styles.sectionTitle}>¿Por qué elegir ProBank?</h2>
         <div className={styles.grid}>
           <div className={`${styles.featureCard} glass`}>
             <div className={styles.icon}>🔒</div>
-            <h3>Secure by Design</h3>
-            <p>Military-grade encryption for all your financial data and transactions.</p>
+            <h3>Seguro por Diseño</h3>
+            <p>Encriptación de grado militar para todos tus datos financieros y transacciones.</p>
           </div>
           <div className={`${styles.featureCard} glass`}>
             <div className={styles.icon}>⚡</div>
-            <h3>Instant Transfers</h3>
-            <p>Send and receive money globally in seconds with zero hidden fees.</p>
+            <h3>Transferencias Instantáneas</h3>
+            <p>Envía y recibe dinero globalmente en segundos sin comisiones ocultas.</p>
           </div>
           <div className={`${styles.featureCard} glass`}>
             <div className={styles.icon}>📊</div>
-            <h3>Smart Analytics</h3>
-            <p>Get deep insights into your spending habits with AI-powered reports.</p>
+            <h3>Analítica Inteligente</h3>
+            <p>Obtén información profunda sobre tus hábitos de gasto con informes impulsados por IA.</p>
           </div>
         </div>
       </section>
