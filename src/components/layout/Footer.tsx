@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './Footer.module.css';
 
 export const Footer: React.FC = () => {
@@ -9,7 +10,13 @@ export const Footer: React.FC = () => {
                 <div className={styles.grid}>
                     <div className={styles.brand}>
                         <Link href="/" className={styles.logo}>
-                            <span className={styles.logoText}>Pro</span>Bank
+                            <Image
+                                src="/logo.png"
+                                alt="ProBank Logo"
+                                width={120}
+                                height={34}
+                                className={styles.logoImage}
+                            />
                         </Link>
                         <p className={styles.description}>
                             Redefiniendo el futuro de las finanzas con tecnología de vanguardia y diseño elegante.

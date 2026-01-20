@@ -7,6 +7,7 @@
     width: 90%;
     max-width: 1200px;
     height: 5rem;
+    /* Reducido de 6rem a 5rem */
     display: flex;
     align-items: center;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -24,7 +25,7 @@
 .scrolled {
     top: 0.75rem;
     width: 95%;
-    /* Mantenemos el 3% de transparencia al hacer scroll */
+    height: 4.5rem;
     background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -40,14 +41,15 @@
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: -0.025em;
-    color: #1e293b;
+    display: flex;
+    align-items: center;
 }
 
-.logoText {
-    color: var(--primary);
+.logoImage {
+    height: 34px;
+    /* Reducido un 50% (de 68px a 34px) */
+    width: auto;
+    object-fit: contain;
 }
 
 .links {
@@ -80,10 +82,6 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .logo {
-        color: #f8fafc;
-    }
-
     .link {
         color: #cbd5e1;
     }
@@ -98,5 +96,10 @@
     .scrolled {
         width: 95%;
         padding: 0 1rem;
+        height: 4.5rem;
+    }
+
+    .logoImage {
+        height: 28px;
     }
 }

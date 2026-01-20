@@ -1,6 +1,6 @@
 .main {
   min-height: 100vh;
-  padding-top: 4.5rem;
+  padding-top: 8rem;
 }
 
 .hero {
@@ -75,6 +75,16 @@
 .cardLogo {
   font-weight: 800;
   font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.cardLogoImage {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  /* Hacer el logo blanco para la tarjeta oscura */
 }
 
 .cardChip {

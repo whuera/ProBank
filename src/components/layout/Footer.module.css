@@ -58,14 +58,14 @@
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: -0.025em;
-    color: #1e293b;
+    display: flex;
+    align-items: center;
 }
 
-.logoText {
-    color: var(--primary);
+.logoImage {
+    height: 34px;
+    width: auto;
+    object-fit: contain;
 }
 
 .description {
@@ -126,7 +126,6 @@
         color: #f8fafc;
     }
 
-    .logo,
     .linksGroup h4 {
         color: #f8fafc;
     }

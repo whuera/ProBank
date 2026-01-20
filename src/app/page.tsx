@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/Button';
+import Image from 'next/image';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -25,7 +26,15 @@ export default function Home() {
         <div className={`${styles.heroImage} animate-float`}>
           <div className={styles.card}>
             <div className={styles.cardHeader}>
-              <div className={styles.cardLogo}>ProBank</div>
+              <div className={styles.cardLogo}>
+                <Image
+                  src="/probank-logo.png"
+                  alt="ProBank Logo"
+                  width={100}
+                  height={28}
+                  className={styles.cardLogoImage}
+                />
+              </div>
               <div className={styles.cardChip}></div>
             </div>
             <div className={styles.cardNumber}>**** **** **** 4242</div>

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './Navbar.module.css';
 import { Button } from '../ui/Button';
 import { useScroll } from '@/hooks/useScroll';
@@ -14,7 +15,13 @@ export const Navbar: React.FC = () => {
         <nav className={cn(styles.navbar, scrolled && styles.scrolled)}>
             <div className={styles.container}>
                 <Link href="/" className={styles.logo}>
-                    <span className={styles.logoText}>Pro</span>Bank
+                    <Image
+                        src="/logo.png"
+                        alt="ProBank Logo"
+                        width={120}
+                        height={34}
+                        className={styles.logoImage}
+                    />
                 </Link>
 
                 <div className={styles.links}>
