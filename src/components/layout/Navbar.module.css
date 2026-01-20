@@ -7,29 +7,28 @@
     width: 90%;
     max-width: 1200px;
     height: 5rem;
+    /* Reducido de 6rem a 5rem */
     display: flex;
     align-items: center;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* 10% de transparencia (90% opacidad) */
-    background: rgba(255, 255, 255, 0.3);
-
-    /* Efecto acrílico potente para difuminar el fondo */
-    backdrop-filter: blur(25px) saturate(160%);
-    -webkit-backdrop-filter: blur(25px) saturate(160%);
+    /* 3% de transparencia (97% opacidad) */
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
     border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 2.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scrolled {
     top: 0.75rem;
     width: 95%;
-    /* Mantenemos el 10% de transparencia al hacer scroll */
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    height: 4.5rem;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
 
@@ -42,14 +41,15 @@
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: -0.025em;
-    color: #1e293b;
+    display: flex;
+    align-items: center;
 }
 
-.logoText {
-    color: var(--primary);
+.logoImage {
+    height: 34px;
+    /* Reducido un 50% (de 68px a 34px) */
+    width: auto;
+    object-fit: contain;
 }
 
 .links {
@@ -78,12 +78,8 @@
 
     .navbar,
     .scrolled {
-        background: rgba(15, 23, 42, 0.9);
+        background: rgba(15, 23, 42, 0.97);
         border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .logo {
-        color: #f8fafc;
     }
 
     .link {
@@ -100,5 +96,10 @@
     .scrolled {
         width: 95%;
         padding: 0 1rem;
+        height: 4.5rem;
+    }
+
+    .logoImage {
+        height: 28px;
     }
 }
