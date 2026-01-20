@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
                 <div className={styles.actions}>
                     <Button variant="ghost" size="sm">Ingresar</Button>
                     <Link href="/registro">
-                        <Button variant="primary" size="sm">Sumate como Cliente</Button>
+                        <Button variant="primary" size="sm">Súmate como Cliente</Button>
                     </Link>
                 </div>
             </div>
