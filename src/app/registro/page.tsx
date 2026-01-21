@@ -15,6 +15,7 @@ export default function Registro() {
         comment: ''
     });
     const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState<{ type: 'success' | 'error' | null, message: string | null }>({ type: null, message: null });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -27,6 +28,7 @@ export default function Registro() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+        setStatus({ type: null, message: null });
 
         try {
             const response = await fetch('https://azure-app-shopping-cart-reload-225fb76523b0.herokuapp.com/api/customer/create', {
@@ -38,8 +40,21 @@ export default function Registro() {
             });
 
             if (response.ok) {
-                alert('¡Cuenta creada exitosamente!');
-                // Reset form or redirect
+                // Segundo paso: Enviar datos al webhook de n8n
+                try {
+                    await fetch('https://whuera.app.n8n.cloud/webhook/02fa2490-a834-473c-b197-b8f478a8e004', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    });
+                } catch (webhookError) {
+                    console.error('Error enviando al webhook:', webhookError);
+                }
+
+                setStatus({ type: 'success', message: '¡Cuenta creada exitosamente!' });
+                // Reset form
                 setFormData({
                     firstName: '',
                     lastName: '',
@@ -51,11 +66,11 @@ export default function Registro() {
             } else {
                 const errorData = await response.json().catch(() => ({}));
                 console.error('Error:', errorData);
-                alert('Hubo un error al crear la cuenta. Por favor intenta nuevamente.');
+                setStatus({ type: 'error', message: 'Hubo un error al crear la cuenta. Por favor intenta nuevamente.' });
             }
         } catch (error) {
             console.error('Error de red:', error);
-            alert('Error de conexión. Verifica tu internet.');
+            setStatus({ type: 'error', message: 'Error de conexión. Verifica tu internet.' });
         } finally {
             setLoading(false);
         }
@@ -68,6 +83,12 @@ export default function Registro() {
                 <div className={`${styles.formCard} card-acrylic animate-fade-in`}>
                     <h1 className={styles.title}>Únete a <span className={styles.gradientText}>ProBank</span></h1>
                     <p className={styles.subtitle}>Completa tus datos para abrir tu cuenta en minutos.</p>
+
+                    {status.message && (
+                        <div className={status.type === 'success' ? styles.successMessage : styles.errorMessage}>
+                            {status.message}
+                        </div>
+                    )}
 
                     <form className={styles.form} onSubmit={handleSubmit}>
                         <div className={styles.row}>
