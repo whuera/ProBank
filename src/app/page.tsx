@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/Button';
+import { TradingWidget } from '@/components/ui/TradingWidget';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -22,6 +23,10 @@ export default function Home() {
               <Button variant="secondary" size="lg">Saber Más</Button>
             </div>
           </div>
+        </div>
+        <div className={`${styles.heroWidgetPanel} animate-fade-in`}>
+          {/* Widget dinámico de Mercados (TradingView) con estética Premium */}
+          <TradingWidget />
         </div>
       </section>
 

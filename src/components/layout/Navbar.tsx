@@ -14,7 +14,9 @@ export const Navbar: React.FC = () => {
         <nav className={cn(styles.navbar, scrolled && styles.scrolled)}>
             <div className={styles.container}>
                 <Link href="/" className={styles.logo}>
-                    <span className={styles.logoText}>ProFinance</span>
+                    <span className={styles.logoText}>
+                        Pro<span className={styles.logoHighlight}>Finance</span>
+                    </span>
                 </Link>
 
                 <div className={styles.links}>
