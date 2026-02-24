@@ -1,10 +1,11 @@
+/* Button - Dark theme matching whuera.github.io */
 .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    border-radius: 2rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
     gap: 0.5rem;
     white-space: nowrap;
     cursor: pointer;
@@ -16,53 +17,69 @@
 }
 
 .primary {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    background: linear-gradient(135deg, rgba(88, 166, 255, 0.2), rgba(31, 111, 235, 0.2));
+    color: #58a6ff;
+    border: 1px solid rgba(88, 166, 255, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .primary:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
-    filter: brightness(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: rgba(88, 166, 255, 0.5);
 }
 
 .secondary {
-    background: var(--glass-bg);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--glass-border);
-    color: var(--foreground);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f8fafc;
 }
 
 .secondary:hover:not(:disabled) {
-    background: var(--glass-border);
+    background: rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .outline {
     background: transparent;
-    border: 2px solid var(--primary);
-    color: var(--primary);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    color: #60a5fa;
 }
 
 .outline:hover:not(:disabled) {
-    background: var(--primary);
-    color: white;
+    background: rgba(59, 130, 246, 0.1);
+    color: #ffffff;
+    border-color: #3b82f6;
+}
+
+.ghost {
+    background: transparent;
+    color: #94a3b8;
+    border: 1px solid transparent;
+}
+
+.ghost:hover:not(:disabled) {
+    color: #f8fafc;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .sm {
-    padding: 0.5rem 1.25rem;
+    padding: 8px 16px;
     font-size: 0.875rem;
 }
 
 .md {
-    padding: 0.75rem 1.75rem;
-    font-size: 1rem;
+    padding: 10px 20px;
+    font-size: 0.95rem;
 }
 
 .lg {
-    padding: 1rem 2.5rem;
-    font-size: 1.125rem;
+    padding: 12px 28px;
+    font-size: 1rem;
 }
 
 .loader {
@@ -70,7 +87,7 @@
     height: 1.25rem;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
-    border-top-color: white;
+    border-top-color: #58a6ff;
     animation: spin 0.8s linear infinite;
 }
 

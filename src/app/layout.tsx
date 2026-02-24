@@ -10,11 +10,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ProBank | Soluciones Bancarias Modernas",
-  description: "Experimenta el futuro de la banca con ProBank. Seguro, rápido y elegante.",
-  keywords: ["banca", "finanzas", "nextjs", "interfaz moderna", "probank"],
-  authors: [{ name: "Equipo ProBank" }],
-  viewport: "width=device-width, initial-scale=1",
+  title: "ProFinance | Soluciones Bancarias Modernas",
+  description: "Experimenta el futuro de la banca con ProFinance. Seguro, rápido y elegante.",
+  keywords: ["banca", "finanzas", "nextjs", "interfaz moderna", "profinance"],
+  authors: [{ name: "Equipo ProFinance" }],
 };
 
 export default function RootLayout({
@@ -24,6 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+      </head>
       <body className={inter.variable}>
         <AnimatedBackground />
         {children}
