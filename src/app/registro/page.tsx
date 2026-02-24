@@ -81,7 +81,7 @@ export default function Registro() {
             <Navbar />
             <div className={styles.container}>
                 <div className={`${styles.formCard} card-acrylic animate-fade-in`}>
-                    <h1 className={styles.title}>Únete a <span className={styles.gradientText}>ProBank</span></h1>
+                    <h1 className={styles.title}>Únete a <span className={styles.gradientText}>ProFinance</span></h1>
                     <p className={styles.subtitle}>Completa tus datos para abrir tu cuenta en minutos.</p>
 
                     {status.message && (
@@ -164,7 +164,7 @@ export default function Registro() {
                                 name="comment"
                                 value={formData.comment}
                                 onChange={handleChange}
-                                placeholder="¿Por qué quieres unirte a ProBank?"
+                                placeholder="¿Por qué quieres unirte a ProFinance?"
                                 className={styles.textarea}
                                 rows={3}
                             />

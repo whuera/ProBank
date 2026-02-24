@@ -1,6 +1,6 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/Button';
-import Image from 'next/image';
+import { TradingWidget } from '@/components/ui/TradingWidget';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -9,51 +9,29 @@ export default function Home() {
       <Navbar />
 
       <section className={styles.hero}>
-        <div className={styles.heroContent}>
-          <h1 className={`${styles.title} animate-fade-in`}>
-            El Futuro de la <span className={styles.gradientText}>Banca</span> ya está aquí
-          </h1>
-          <p className={`${styles.description} animate-fade-in`}>
-            Experimenta una forma fluida, segura y elegante de gestionar tus finanzas.
-            Únete a miles de usuarios que confían en ProBank para sus transacciones diarias.
-          </p>
-          <div className={`${styles.cta} animate-fade-in`}>
-            <Button size="lg">Abrir Cuenta</Button>
-            <Button variant="secondary" size="lg">Saber Más</Button>
+        <div className={`${styles.heroGlassPanel} animate-fade-in`}>
+          <div className={styles.heroContent}>
+            <h1 className={styles.title}>
+              El Futuro de la <span className={styles.gradientText}>Banca</span> ya está aquí
+            </h1>
+            <p className={styles.description}>
+              Experimenta una forma fluida, segura y elegante de gestionar tus finanzas.
+              Únete a miles de usuarios que confían en ProFinance para sus transacciones diarias.
+            </p>
+            <div className={styles.cta}>
+              <Button size="lg">Abrir Cuenta</Button>
+              <Button variant="secondary" size="lg">Saber Más</Button>
+            </div>
           </div>
         </div>
-
-        <div className={`${styles.heroImage} animate-float`}>
-          <div className={styles.card}>
-            <div className={styles.cardHeader}>
-              <div className={styles.cardLogo}>
-                <Image
-                  src="/probank-logo.png"
-                  alt="ProBank Logo"
-                  width={100}
-                  height={28}
-                  className={styles.cardLogoImage}
-                />
-              </div>
-              <div className={styles.cardChip}></div>
-            </div>
-            <div className={styles.cardNumber}>**** **** **** 4242</div>
-            <div className={styles.cardFooter}>
-              <div>
-                <div className={styles.cardLabel}>Titular</div>
-                <div className={styles.cardValue}>ALEX RIVERA</div>
-              </div>
-              <div>
-                <div className={styles.cardLabel}>Vence</div>
-                <div className={styles.cardValue}>12/28</div>
-              </div>
-            </div>
-          </div>
+        <div className={`${styles.heroWidgetPanel} animate-fade-in`}>
+          {/* Widget dinámico de Mercados (TradingView) con estética Premium */}
+          <TradingWidget />
         </div>
       </section>
 
       <section id="features" className={styles.features}>
-        <h2 className={styles.sectionTitle}>¿Por qué elegir ProBank?</h2>
+        <h2 className={styles.sectionTitle}>¿Por qué elegir ProFinance?</h2>
         <div className={styles.grid}>
           <div className={`${styles.featureCard} glass`}>
             <div className={styles.icon}>🔒</div>

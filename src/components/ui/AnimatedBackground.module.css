@@ -1,214 +1,131 @@
-@keyframes move {
+.backgroundContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--primary-color);
+    /* Viñeta elegante: Centro suave que se funde limpiamente con el color de fondo en los bordes */
+    background-image:
+        radial-gradient(circle at 50% 50%, rgba(13, 17, 23, 0.55) 0%, rgba(13, 17, 23, 0.95) 70%, var(--primary-color) 100%),
+        url('/finance_bg.png');
+    /* Técninca moderna: Un área mínima y máxima de escala para jamás estirarlo forzadamente ni pixelarlo (apto para movil y PC) */
+    background-size: clamp(800px, 100vw, 1920px) auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -3;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Mesh gradients for modern fintech look */
+.meshGlow1,
+.meshGlow2,
+.meshGlow3,
+.meshGlow4 {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.6;
+    animation: float 20s infinite alternate ease-in-out;
+}
+
+.meshGlow1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.45) 0%, rgba(59, 130, 246, 0) 70%);
+    /* Bright Blue */
+    top: -10%;
+    left: -10%;
+    animation-delay: 0s;
+}
+
+.meshGlow2 {
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0) 70%);
+    /* Violet */
+    bottom: -20%;
+    right: -10%;
+    animation-delay: -5s;
+    animation-duration: 25s;
+}
+
+.meshGlow3 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.3) 0%, rgba(20, 184, 166, 0) 70%);
+    /* Teal */
+    top: 40%;
+    left: 40%;
+    animation-delay: -10s;
+    animation-duration: 30s;
+}
+
+.meshGlow4 {
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0) 70%);
+    /* Deep Navy Core */
+    bottom: 10%;
+    left: -20%;
+    animation-delay: -15s;
+    animation-duration: 22s;
+}
+
+/* Very subtle noise overlay to add texture (optional but looks great for premium sites) */
+.noiseOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    z-index: 10;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+
     100% {
-        transform: translate3d(0, 0, 1px) rotate(360deg);
+        transform: translate(0, 0) scale(1);
     }
 }
 
-.background {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    background: #3E1E68;
-    overflow: hidden;
-    z-index: -1;
-}
+@media (max-width: 768px) {
 
-.background span {
-    width: 25vmin;
-    height: 25vmin;
-    border-radius: 25vmin;
-    backface-visibility: hidden;
-    position: absolute;
-    animation: move;
-    animation-duration: 45s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    background-color: currentColor;
-    filter: blur(12vmin);
-    /* Blur más fuerte para el efecto bokeh */
-    opacity: 0.5;
-    mix-blend-mode: screen;
-    /* Para que los colores se mezclen de forma luminosa */
-}
+    .meshGlow1,
+    .meshGlow2,
+    .meshGlow3,
+    .meshGlow4 {
+        filter: blur(80px);
+        /* Less blur on mobile for performance */
+    }
 
-.background span:nth-child(1) {
-    color: #583C87;
-    top: 89%;
-    left: 1%;
-    animation-duration: 52s;
-    animation-delay: -4s;
-    transform-origin: 17vw -11vh;
-}
+    .meshGlow1 {
+        width: 400px;
+        height: 400px;
+    }
 
-.background span:nth-child(2) {
-    color: #E45A84;
-    top: 12%;
-    left: 18%;
-    animation-duration: 37s;
-    animation-delay: -33s;
-    transform-origin: 19vw -22vh;
-}
+    .meshGlow2 {
+        width: 500px;
+        height: 500px;
+    }
 
-.background span:nth-child(3) {
-    color: #E45A84;
-    top: 54%;
-    left: 29%;
-    animation-duration: 6s;
-    animation-delay: -39s;
-    transform-origin: -17vw 17vh;
-}
-
-.background span:nth-child(4) {
-    color: #FFACAC;
-    top: 17%;
-    left: 84%;
-    animation-duration: 25s;
-    animation-delay: -6s;
-    transform-origin: 5vw 0vh;
-}
-
-.background span:nth-child(5) {
-    color: #583C87;
-    top: 26%;
-    left: 62%;
-    animation-duration: 50s;
-    animation-delay: -45s;
-    transform-origin: 1vw 13vh;
-}
-
-.background span:nth-child(6) {
-    color: #FFACAC;
-    top: 56%;
-    left: 70%;
-    animation-duration: 13s;
-    animation-delay: -39s;
-    transform-origin: 25vw 11vh;
-}
-
-.background span:nth-child(7) {
-    color: #583C87;
-    top: 64%;
-    left: 61%;
-    animation-duration: 6s;
-    animation-delay: -24s;
-    transform-origin: 0vw 18vh;
-}
-
-.background span:nth-child(8) {
-    color: #FFACAC;
-    top: 50%;
-    left: 36%;
-    animation-duration: 23s;
-    animation-delay: -41s;
-    transform-origin: 5vw 3vh;
-}
-
-.background span:nth-child(9) {
-    color: #FFACAC;
-    top: 81%;
-    left: 19%;
-    animation-duration: 40s;
-    animation-delay: -42s;
-    transform-origin: -19vw 9vh;
-}
-
-.background span:nth-child(10) {
-    color: #583C87;
-    top: 24%;
-    left: 35%;
-    animation-duration: 25s;
-    animation-delay: -22s;
-    transform-origin: 19vw 3vh;
-}
-
-.background span:nth-child(11) {
-    color: #E45A84;
-    top: 33%;
-    left: 32%;
-    animation-duration: 51s;
-    animation-delay: -50s;
-    transform-origin: -24vw -4vh;
-}
-
-.background span:nth-child(12) {
-    color: #E45A84;
-    top: 59%;
-    left: 65%;
-    animation-duration: 33s;
-    animation-delay: -20s;
-    transform-origin: 21vw -5vh;
-}
-
-.background span:nth-child(13) {
-    color: #FFACAC;
-    top: 84%;
-    left: 78%;
-    animation-duration: 43s;
-    animation-delay: -19s;
-    transform-origin: 11vw -15vh;
-}
-
-.background span:nth-child(14) {
-    color: #E45A84;
-    top: 5%;
-    left: 99%;
-    animation-duration: 6s;
-    animation-delay: -4s;
-    transform-origin: -16vw -5vh;
-}
-
-.background span:nth-child(15) {
-    color: #E45A84;
-    top: 94%;
-    left: 14%;
-    animation-duration: 30s;
-    animation-delay: -35s;
-    transform-origin: 0vw 19vh;
-}
-
-.background span:nth-child(16) {
-    color: #583C87;
-    top: 46%;
-    left: 42%;
-    animation-duration: 55s;
-    animation-delay: -31s;
-    transform-origin: -10vw 3vh;
-}
-
-.background span:nth-child(17) {
-    color: #E45A84;
-    top: 68%;
-    left: 21%;
-    animation-duration: 28s;
-    animation-delay: -4s;
-    transform-origin: 24vw 19vh;
-}
-
-.background span:nth-child(18) {
-    color: #FFACAC;
-    top: 22%;
-    left: 26%;
-    animation-duration: 10s;
-    animation-delay: -44s;
-    transform-origin: 10vw -5vh;
-}
-
-.background span:nth-child(19) {
-    color: #FFACAC;
-    top: 41%;
-    left: 69%;
-    animation-duration: 9s;
-    animation-delay: -30s;
-    transform-origin: -14vw 12vh;
-}
-
-.background span:nth-child(20) {
-    color: #FFACAC;
-    top: 37%;
-    left: 32%;
-    animation-duration: 48s;
-    animation-delay: -30s;
-    transform-origin: 4vw -23vh;
+    .meshGlow3 {
+        width: 300px;
+        height: 300px;
+    }
 }
