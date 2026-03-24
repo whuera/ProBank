@@ -38,17 +38,31 @@
     margin-bottom: 2rem;
 }
 
-.features {
+/* Two-column Layout Layout */
+.contentLayout {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 2rem 2rem 6rem;
+    padding: 0 2rem 6rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+/* Left side content */
+.mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.features {
+    width: 100%;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
-    margin-top: 2rem;
 }
 
 .grid h3 {
@@ -61,6 +75,164 @@
 .grid p {
     color: var(--menu-text);
     line-height: 1.6;
+}
+
+/* Right side Widget (Reference styling) */
+.sidebarRight {
+    width: 320px; /* Fixed width for the sidebar */
+    flex-shrink: 0;
+    position: sticky;
+    top: 100px; /* So it sticks nicely while scrolling */
+}
+
+/* Glassmorphism Widget Card */
+.glassWidget {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px; /* More rounded corners like the image */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.widgetHeader {
+    padding: 1.25rem 1.25rem 0.5rem;
+}
+
+.widgetHeader h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #f8fafc;
+    margin: 0;
+}
+
+/* Customer List Vertical */
+.widgetList {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1.25rem 1.5rem;
+    gap: 1.25rem;
+}
+
+/* Individual list item */
+.widgetItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s;
+    border-radius: 12px;
+    padding: 6px;
+    margin: -6px; /* Para que el padding no rompa la alineación general pero de área de hover */
+}
+
+.widgetItem:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Profile Picture & Overlays */
+.avatarWrapper {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+}
+
+.avatarImg {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Status dots imitating the reference image */
+.statusDot {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #0d1117; /* match generic dark background or widget color */
+}
+
+.statusGreen {
+    background-color: #3fb950;
+    box-shadow: 0 0 8px rgba(63, 185, 80, 0.5);
+}
+
+.statusYellow {
+    background-color: #e3b341;
+    box-shadow: 0 0 8px rgba(227, 179, 65, 0.5);
+}
+
+.itemInfo {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.itemInfo h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.itemInfo p {
+    margin: 0;
+    color: var(--menu-text);
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Widget Footer - Matches the bottom card from the image */
+.widgetFooter {
+    padding: 0 1.25rem 1.25rem;
+}
+
+.footerGlass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+.footerGlass:hover {
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.footerGlass span {
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+
+/* Responsiveness */
+@media (max-width: 992px) {
+    .contentLayout {
+        flex-direction: column;
+    }
+
+    .sidebarRight {
+        width: 100%;
+        position: static;
+    }
 }
 
 @media (max-width: 768px) {

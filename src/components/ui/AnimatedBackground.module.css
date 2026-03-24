@@ -5,127 +5,18 @@
     width: 100vw;
     height: 100vh;
     background-color: var(--primary-color);
-    /* Viñeta elegante: Centro suave que se funde limpiamente con el color de fondo en los bordes */
-    background-image:
-        radial-gradient(circle at 50% 50%, rgba(13, 17, 23, 0.55) 0%, rgba(13, 17, 23, 0.95) 70%, var(--primary-color) 100%),
-        url('/finance_bg.png');
-    /* Técninca moderna: Un área mínima y máxima de escala para jamás estirarlo forzadamente ni pixelarlo (apto para movil y PC) */
-    background-size: clamp(800px, 100vw, 1920px) auto;
-    background-position: center;
-    background-repeat: no-repeat;
+    /* Fondo con degrade sutil en tonos azules oscuro para que resalte la animación y no interrumpa lectura */
+    background-image: radial-gradient(circle at top center, rgba(30, 58, 138, 0.25) 0%, rgba(13, 17, 23, 1) 70%, var(--primary-color) 100%);
     z-index: -3;
     overflow: hidden;
     pointer-events: none;
 }
 
-/* Mesh gradients for modern fintech look */
-.meshGlow1,
-.meshGlow2,
-.meshGlow3,
-.meshGlow4 {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.6;
-    animation: float 20s infinite alternate ease-in-out;
-}
-
-.meshGlow1 {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.45) 0%, rgba(59, 130, 246, 0) 70%);
-    /* Bright Blue */
-    top: -10%;
-    left: -10%;
-    animation-delay: 0s;
-}
-
-.meshGlow2 {
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0) 70%);
-    /* Violet */
-    bottom: -20%;
-    right: -10%;
-    animation-delay: -5s;
-    animation-duration: 25s;
-}
-
-.meshGlow3 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(20, 184, 166, 0.3) 0%, rgba(20, 184, 166, 0) 70%);
-    /* Teal */
-    top: 40%;
-    left: 40%;
-    animation-delay: -10s;
-    animation-duration: 30s;
-}
-
-.meshGlow4 {
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0) 70%);
-    /* Deep Navy Core */
-    bottom: 10%;
-    left: -20%;
-    animation-delay: -15s;
-    animation-duration: 22s;
-}
-
-/* Very subtle noise overlay to add texture (optional but looks great for premium sites) */
-.noiseOverlay {
+.canvasBackground {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.04;
-    mix-blend-mode: overlay;
-    z-index: 10;
-}
-
-@keyframes float {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    33% {
-        transform: translate(30px, -50px) scale(1.1);
-    }
-
-    66% {
-        transform: translate(-20px, 20px) scale(0.9);
-    }
-
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-}
-
-@media (max-width: 768px) {
-
-    .meshGlow1,
-    .meshGlow2,
-    .meshGlow3,
-    .meshGlow4 {
-        filter: blur(80px);
-        /* Less blur on mobile for performance */
-    }
-
-    .meshGlow1 {
-        width: 400px;
-        height: 400px;
-    }
-
-    .meshGlow2 {
-        width: 500px;
-        height: 500px;
-    }
-
-    .meshGlow3 {
-        width: 300px;
-        height: 300px;
-    }
+    opacity: 0.85; /* Ajuste para mantener la animación visible pero sutil por detrás del texto */
 }
