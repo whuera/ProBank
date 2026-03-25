@@ -1,0 +1,168 @@
+.page { display: flex; flex-direction: column; gap: 24px; }
+
+.header {}
+.title { font-size: 1.5rem; font-weight: 800; color: #0f172a; margin: 0 0 4px; }
+.subtitle { color: #64748b; font-size: 0.88rem; margin: 0; }
+
+/* Stats grid */
+.statsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 1024px) { .statsGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .statsGrid { grid-template-columns: 1fr; } }
+
+.statCard {
+  border-radius: 16px; padding: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  position: relative; overflow: hidden;
+}
+.statCard::before {
+  content: ''; position: absolute; top: -30px; right: -30px;
+  width: 100px; height: 100px; background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+
+.statTop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.statLabel { color: rgba(255,255,255,0.7); font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.statIconBlue, .statIconGreen, .statIconPurple, .statIconOrange {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); font-size: 0.85rem;
+}
+
+.statValue { color: #fff; font-size: 1.35rem; font-weight: 800; margin: 0 0 4px; }
+.statSub { color: rgba(255,255,255,0.55); font-size: 0.75rem; margin: 0; }
+
+/* Growth card */
+.growthCard {
+  background: #fff; border-radius: 20px; padding: 24px;
+  box-shadow: 0 2px 16px rgba(37, 99, 235, 0.07);
+  border: 1px solid rgba(37, 99, 235, 0.08);
+}
+
+.growthHeader { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.growthTitle { font-size: 1rem; font-weight: 700; color: #0f172a; margin: 0 0 4px; }
+.growthSub { color: #64748b; font-size: 0.82rem; margin: 0; }
+.growthBadge {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 20px;
+  background: rgba(5, 150, 105, 0.1); border: 1px solid rgba(5, 150, 105, 0.2);
+  color: #059669; font-size: 0.8rem; font-weight: 600; white-space: nowrap;
+}
+
+.growthTimeline {
+  display: flex; align-items: flex-end; gap: 16px; height: 120px;
+}
+
+.growthItem { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; }
+.growthBar { flex: 1; width: 100%; display: flex; align-items: flex-end; }
+.growthFill {
+  width: 100%; border-radius: 6px 6px 0 0; min-height: 8px;
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.growthLabel { font-size: 0.7rem; color: #64748b; font-weight: 500; white-space: nowrap; }
+.growthVal { font-size: 0.7rem; color: #0f172a; font-weight: 600; white-space: nowrap; }
+
+/* Bottom grid */
+.bottomGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+@media (max-width: 900px) { .bottomGrid { grid-template-columns: 1fr; } }
+
+.sectionTitle { font-size: 1rem; font-weight: 700; color: #0f172a; margin: 0 0 16px; }
+
+/* Plans */
+.plansSection {}
+.plansList { display: flex; flex-direction: column; gap: 10px; }
+
+.planCard {
+  display: flex; align-items: flex-start; gap: 14px; padding: 16px;
+  background: #fff; border: 1.5px solid #e2e8f0; border-radius: 14px;
+  cursor: pointer; transition: all 0.2s; text-align: left; font-family: inherit;
+  width: 100%; position: relative;
+}
+.planCard:hover { border-color: #93c5fd; background: rgba(219, 234, 254, 0.3); }
+.planSelected { box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1); }
+
+.popularBadge {
+  position: absolute; top: -1px; right: 14px;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: #fff; font-size: 0.65rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 0 0 8px 8px; letter-spacing: 0.5px;
+}
+
+.planIcon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+
+.planInfo { flex: 1; }
+.planName { font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0 0 2px; }
+.planRate { font-size: 0.9rem; font-weight: 700; margin: 0 0 2px; }
+.planAnnual { font-size: 0.78rem; color: #64748b; margin: 0 0 4px; }
+.planDesc { font-size: 0.78rem; color: #94a3b8; margin: 0; }
+.planCheck { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+
+/* Deposit card */
+.depositCard {
+  background: #fff; border-radius: 20px; padding: 24px;
+  box-shadow: 0 2px 16px rgba(37, 99, 235, 0.07);
+  border: 1px solid rgba(37, 99, 235, 0.08);
+}
+
+.depositSub { color: #64748b; font-size: 0.85rem; margin: -8px 0 18px; }
+.errorAlert { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 10px; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #ef4444; font-size: 0.85rem; margin-bottom: 16px; }
+
+.depositForm { display: flex; flex-direction: column; gap: 18px; }
+.fieldGroup { display: flex; flex-direction: column; gap: 6px; }
+.label { font-size: 0.88rem; font-weight: 600; color: #374151; }
+
+.inputWrapper { position: relative; display: flex; align-items: center; }
+.prefix { position: absolute; left: 14px; color: #374151; font-weight: 600; font-size: 1rem; pointer-events: none; }
+.input {
+  width: 100%; padding: 12px 14px 12px 30px;
+  background: #f8fafc; border: 1.5px solid #e2e8f0;
+  border-radius: 10px; font-size: 1.1rem; font-weight: 600; color: #0f172a;
+  font-family: inherit; outline: none; transition: all 0.2s;
+}
+.input::placeholder { color: #cbd5e1; font-weight: 400; }
+.input:focus { border-color: #3b82f6; background: #fff; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+
+.preview {
+  background: rgba(5, 150, 105, 0.06); border: 1px solid rgba(5, 150, 105, 0.15);
+  border-radius: 10px; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.previewRow { display: flex; justify-content: space-between; font-size: 0.85rem; color: #374151; }
+
+.depositBtn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 14px; border-radius: 12px;
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: #fff; font-size: 0.95rem; font-weight: 600; font-family: inherit;
+  border: none; cursor: pointer; transition: all 0.3s;
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.3);
+}
+.depositBtn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(5, 150, 105, 0.4); }
+.depositBtn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.securityNote {
+  display: flex; align-items: flex-start; gap: 8px;
+  color: #64748b; font-size: 0.78rem; margin-top: 12px; line-height: 1.5;
+}
+.securityNote i { color: #94a3b8; flex-shrink: 0; margin-top: 2px; }
+
+/* Deposit success */
+.depositSuccess { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 16px 0; }
+.successIcon {
+  width: 68px; height: 68px; border-radius: 50%;
+  background: linear-gradient(135deg, #059669, #10b981);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.8rem;
+  box-shadow: 0 8px 24px rgba(5, 150, 105, 0.4);
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+.successTitle { font-size: 1.2rem; font-weight: 700; color: #0f172a; margin: 0; }
+.successDesc { color: #374151; font-size: 0.9rem; margin: 0; }
+.successSub { color: #059669; font-size: 0.85rem; margin: 0; }

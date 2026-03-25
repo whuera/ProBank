@@ -5,8 +5,12 @@
     width: 100vw;
     height: 100vh;
     background-color: var(--primary-color);
-    /* Fondo con degrade sutil en tonos azules oscuro para que resalte la animación y no interrumpa lectura */
-    background-image: radial-gradient(circle at top center, rgba(30, 58, 138, 0.25) 0%, rgba(13, 17, 23, 1) 70%, var(--primary-color) 100%);
+    /* Radial gradient + grid lines (horizontal + vertical) */
+    background-image:
+        radial-gradient(circle at top center, rgba(30, 58, 138, 0.25) 0%, rgba(13, 17, 23, 1) 70%, var(--primary-color) 100%),
+        linear-gradient(rgba(88, 166, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(88, 166, 255, 0.05) 1px, transparent 1px);
+    background-size: auto, 60px 60px, 60px 60px;
     z-index: -3;
     overflow: hidden;
     pointer-events: none;

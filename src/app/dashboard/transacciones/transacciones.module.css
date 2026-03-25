@@ -1,0 +1,105 @@
+.page { display: flex; flex-direction: column; gap: 20px; }
+
+.header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.title { font-size: 1.5rem; font-weight: 800; color: #0f172a; margin: 0 0 4px; letter-spacing: -0.3px; }
+.subtitle { color: #64748b; font-size: 0.88rem; margin: 0; }
+
+/* Summary */
+.summaryGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 600px) { .summaryGrid { grid-template-columns: 1fr; } }
+
+.summaryCard {
+  background: #fff; border-radius: 14px; padding: 18px 20px;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.08);
+}
+
+.summaryIcon {
+  width: 42px; height: 42px; border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.05rem; flex-shrink: 0;
+}
+
+.summaryLabel { color: #64748b; font-size: 0.78rem; font-weight: 500; margin: 0 0 4px; }
+.summaryValue { font-size: 1.1rem; font-weight: 700; margin: 0; }
+
+/* Filter bar */
+.filterBar { display: flex; flex-direction: column; gap: 12px; }
+
+.searchWrapper { position: relative; max-width: 360px; }
+.searchIcon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.9rem; }
+.searchInput {
+  width: 100%; padding: 10px 14px 10px 40px;
+  background: #fff; border: 1px solid rgba(37, 99, 235, 0.15);
+  border-radius: 10px; font-size: 0.9rem; color: #0f172a;
+  font-family: inherit; outline: none; transition: border-color 0.2s;
+}
+.searchInput::placeholder { color: #94a3b8; }
+.searchInput:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+.filterChips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;
+  background: #fff; border: 1px solid rgba(37, 99, 235, 0.15);
+  color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.chip:hover { border-color: #3b82f6; color: #2563eb; }
+.chipActive { background: rgba(37, 99, 235, 0.1); border-color: #3b82f6; color: #1d4ed8; font-weight: 600; }
+
+/* Transaction card */
+.txCard {
+  background: #fff; border-radius: 20px; padding: 8px;
+  box-shadow: 0 2px 16px rgba(37, 99, 235, 0.07);
+  border: 1px solid rgba(37, 99, 235, 0.08);
+}
+
+.emptyState {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding: 48px; color: #94a3b8; font-size: 0.9rem;
+}
+.emptyState i { font-size: 2rem; }
+
+.txList { display: flex; flex-direction: column; }
+
+.txRow {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+  border-radius: 12px; transition: background 0.15s;
+  animation: txIn 0.4s ease-out forwards; opacity: 0;
+}
+.txRow:hover { background: rgba(37, 99, 235, 0.04); }
+
+@keyframes txIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.txIcon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.05rem; flex-shrink: 0;
+}
+
+.txBody { flex: 1; min-width: 0; }
+
+.txMain { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 5px; }
+.txDesc { color: #0f172a; font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.txAmount { font-size: 0.95rem; font-weight: 700; flex-shrink: 0; }
+.txPos { color: #059669; }
+.txNeg { color: #ef4444; }
+
+.txMeta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.txType {
+  padding: 2px 8px; border-radius: 20px;
+  font-size: 0.72rem; font-weight: 600;
+}
+
+.txDate { color: #94a3b8; font-size: 0.75rem; }
+.txStatus { display: flex; align-items: center; gap: 4px; font-size: 0.72rem; font-weight: 500; }
+.txStatusDone { color: #10b981; }
+
+@media (max-width: 480px) {
+  .txMain { flex-direction: column; align-items: flex-start; }
+  .txMeta { gap: 6px; }
+}
