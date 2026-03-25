@@ -26,7 +26,9 @@ export const Navbar: React.FC = () => {
                 </div>
 
                 <div className={styles.actions}>
-                    <Button variant="ghost" size="sm">Ingresar</Button>
+                    <Link href="/login">
+                        <Button variant="ghost" size="sm">Ingresar</Button>
+                    </Link>
                     <Link href="/registro">
                         <Button variant="primary" size="sm">Súmate como Cliente</Button>
                     </Link>
