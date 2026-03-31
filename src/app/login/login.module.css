@@ -57,20 +57,10 @@
 .logoArea {
   text-align: center;
   margin-bottom: 28px;
-}
-
-.logoIcon {
-  width: 64px;
-  height: 64px;
-  background: linear-gradient(135deg, #1f6feb, #58a6ff);
-  border-radius: 16px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin: 0 auto 16px;
-  box-shadow: 0 8px 24px rgba(31, 111, 235, 0.4);
-  font-size: 1.6rem;
-  color: #fff;
+  gap: 12px;
 }
 
 .brand {

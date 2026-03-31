@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { ProFinanceLogo } from '@/components/ui/ProFinanceLogo';
 import styles from './layout.module.css';
 
 const NAV_ITEMS = [
@@ -53,7 +54,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`}>
         <div className={styles.sidebarHeader}>
           <Link href="/" className={styles.sidebarLogo}>
-            <span className={styles.logoIcon}><i className="fas fa-shield-halved" /></span>
+            <ProFinanceLogo size={32} />
             <span className={styles.logoText}>Pro<span className={styles.logoAccent}>Finance</span></span>
           </Link>
           <button className={styles.closeSidebar} onClick={() => setSidebarOpen(false)}>

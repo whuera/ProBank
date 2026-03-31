@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { ProFinanceLogo } from '@/components/ui/ProFinanceLogo';
 import styles from './configurar-acceso.module.css';
 
 type Step = 'verify' | 'password' | 'success';
@@ -85,9 +86,7 @@ export default function ConfigurarAccesoPage() {
           </Link>
 
           <div className={styles.logoArea}>
-            <div className={styles.logoIcon}>
-              <i className="fas fa-user-shield" />
-            </div>
+            <ProFinanceLogo size={64} />
             <h1 className={styles.brand}>Pro<span className={styles.brandHighlight}>Finance</span></h1>
           </div>
 
