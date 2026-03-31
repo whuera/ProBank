@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { AnimatedBackground } from '@/components/ui/AnimatedBackground';
 import styles from './login.module.css';
 
 export default function LoginPage() {
@@ -34,12 +35,7 @@ export default function LoginPage() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.background}>
-        <div className={styles.orb1} />
-        <div className={styles.orb2} />
-        <div className={styles.orb3} />
-        <div className={styles.grid} />
-      </div>
+      <AnimatedBackground />
 
       <div className={styles.container}>
         <div className={styles.card}>
