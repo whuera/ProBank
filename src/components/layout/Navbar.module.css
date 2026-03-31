@@ -1,25 +1,21 @@
-/* Navbar - Glassmorphism Premium */
+/* Navbar - Pill-shaped Centered Navigation */
 .navbar {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-    height: 60px;
+    height: 72px;
     display: flex;
     align-items: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-    /* CV Header Style base */
     background: transparent;
-    backdrop-filter: var(--glass-blur);
-
-    border-bottom: 1px solid var(--glass-border);
 }
 
 .scrolled {
-    /* CV Header dark background when scrolled */
-    background: rgba(13, 17, 23, 0.7);
-    box-shadow: var(--box-shadow);
+    background: rgba(13, 17, 23, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .container {
@@ -28,14 +24,16 @@
     margin: 0 auto;
     padding: 0 24px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
+/* Logo */
 .logo {
     display: flex;
     align-items: center;
     gap: 10px;
+    z-index: 1;
 }
 
 .logoText {
@@ -60,42 +58,79 @@
     opacity: 0.85;
 }
 
-.links {
+/* Pill-shaped nav bar centered in the middle */
+.pillNav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    gap: 2.5rem;
-}
-
-.link {
-    font-weight: 500;
-    color: var(--menu-text);
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-}
-
-.link:hover {
-    color: #fff;
-}
-
-.actions {
-    display: flex;
-    gap: 1rem;
     align-items: center;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
+.pillLink {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #94a3b8;
+    border-radius: 100px;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.pillLink:hover {
+    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.pillLinkActive {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Subtle vertical divider between nav links and actions */
+.pillDivider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 8px;
+    flex-shrink: 0;
+}
+
+/* CTA button style inside the pill */
+.pillLinkCta {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.35), rgba(139, 92, 246, 0.25));
+    border: 1px solid rgba(88, 166, 255, 0.25);
+}
+
+.pillLinkCta:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.35));
+    border-color: rgba(88, 166, 255, 0.4);
+    color: #fff;
+    box-shadow: 0 0 16px rgba(59, 130, 246, 0.2);
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-    .links {
+    .pillNav {
         display: none;
     }
 
     .navbar {
         padding: 0 12px;
+        height: 60px;
     }
 
     .logoText {
         font-size: 1.2rem;
-    }
-
-    .actions {
-        gap: 0.5rem;
     }
 }
