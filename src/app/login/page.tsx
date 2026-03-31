@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { AnimatedBackground } from '@/components/ui/AnimatedBackground';
+import { ProFinanceLogo } from '@/components/ui/ProFinanceLogo';
 import styles from './login.module.css';
 
 export default function LoginPage() {
@@ -44,9 +45,7 @@ export default function LoginPage() {
           </Link>
 
           <div className={styles.logoArea}>
-            <div className={styles.logoIcon}>
-              <i className="fas fa-shield-halved" />
-            </div>
+            <ProFinanceLogo size={64} />
             <h1 className={styles.brand}>
               Pro<span className={styles.brandHighlight}>Finance</span>
             </h1>

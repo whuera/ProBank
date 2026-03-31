@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './Navbar.module.css';
 import { Button } from '../ui/Button';
+import { ProFinanceLogo } from '../ui/ProFinanceLogo';
 import { useScroll } from '@/hooks/useScroll';
 import { cn } from '@/lib/utils';
 
@@ -14,6 +15,7 @@ export const Navbar: React.FC = () => {
         <nav className={cn(styles.navbar, scrolled && styles.scrolled)}>
             <div className={styles.container}>
                 <Link href="/" className={styles.logo}>
+                    <ProFinanceLogo size={30} />
                     <span className={styles.logoText}>
                         Pro<span className={styles.logoHighlight}>Finance</span>
                     </span>
