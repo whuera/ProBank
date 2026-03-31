@@ -5,62 +5,7 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: #0d1117;
-}
-
-/* Decorative background */
-.background {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.orb1 {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  top: -100px;
-  right: -100px;
-  background: radial-gradient(circle, rgba(31, 111, 235, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: floatOrb 8s ease-in-out infinite;
-}
-
-.orb2 {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  bottom: -80px;
-  left: -80px;
-  background: radial-gradient(circle, rgba(88, 166, 255, 0.12) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: floatOrb 10s ease-in-out infinite reverse;
-}
-
-.orb3 {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  top: 40%;
-  left: 30%;
-  background: radial-gradient(circle, rgba(163, 113, 247, 0.08) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: floatOrb 12s ease-in-out infinite 3s;
-}
-
-.grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(88, 166, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(88, 166, 255, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-@keyframes floatOrb {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(20px, -30px) scale(1.05); }
+  background: transparent;
 }
 
 /* Container */
