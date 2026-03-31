@@ -8,7 +8,7 @@ import styles from './configurar-acceso.module.css';
 type Step = 'verify' | 'password' | 'success';
 
 export default function ConfigurarAccesoPage() {
-  const { setupCredentials } = useAuth();
+  const { verifyIdentity, setupCredentials } = useAuth();
   const [step, setStep] = useState<Step>('verify');
   const [email, setEmail] = useState('');
   const [documentId, setDocumentId] = useState('');
@@ -26,10 +26,13 @@ export default function ConfigurarAccesoPage() {
     }
     setIsLoading(true);
     setError(null);
-    // Pre-verify before setting password
-    await new Promise(r => setTimeout(r, 800));
+    const result = await verifyIdentity(email, documentId);
     setIsLoading(false);
-    setStep('password');
+    if (result.success) {
+      setStep('password');
+    } else {
+      setError(result.message);
+    }
   };
 
   const handleSetPassword = async (e: React.FormEvent) => {
