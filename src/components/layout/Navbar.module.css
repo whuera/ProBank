@@ -12,10 +12,7 @@
 }
 
 .scrolled {
-    background: rgba(13, 17, 23, 0.6);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+    background: transparent;
 }
 
 .container {
@@ -72,6 +69,16 @@
     border-radius: 100px;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* On scroll: same saturation effect as the footer */
+.scrolled .pillNav {
+    background: rgba(13, 17, 23, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 }
 
 .pillLink {
