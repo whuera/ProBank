@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { ProFinanceLogo } from '@/components/ui/ProFinanceLogo';
+import { AnimatedBackground } from '@/components/ui/AnimatedBackground';
 import styles from './layout.module.css';
 
 const NAV_ITEMS = [
@@ -44,8 +45,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className={styles.shell}>
-      {/* Full page overlay to cover animated dark background */}
-      <div className={styles.bgOverlay} />
+      {/* Animated dark background — same as landing page */}
+      <AnimatedBackground />
 
       {/* Mobile overlay */}
       {sidebarOpen && <div className={styles.mobileOverlay} onClick={() => setSidebarOpen(false)} />}

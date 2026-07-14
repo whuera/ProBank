@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import * as OTPAuth from 'otpauth';
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_URL ??
@@ -24,16 +25,33 @@ export interface Transaction {
   date: string;
   status: 'completed' | 'pending';
   counterparty?: string;
+  riskScore?: number;
+}
+
+export interface SecurityToken {
+  code: string;
+  createdAt: string;
+  used: boolean;
 }
 
 interface AuthContextType {
   user: User | null;
   transactions: Transaction[];
+  securityTokens: SecurityToken[];
+  totpSecret: string | null;
+  totpEnabled: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
   logout: () => void;
   verifyIdentity: (email: string, documentId: string) => Promise<{ success: boolean; message: string }>;
   setupCredentials: (email: string, documentId: string, password: string) => Promise<{ success: boolean; message: string }>;
   addTransaction: (tx: Omit<Transaction, 'id' | 'date'>) => void;
+  generateTokens: (count?: number) => void;
+  consumeToken: (code: string) => boolean;
+  setupTotp: () => string;
+  enableTotp: (code: string) => boolean;
+  disableTotp: () => void;
+  verifyTotp: (code: string) => boolean;
+  getTotpUri: () => string | null;
   isLoading: boolean;
 }
 
@@ -129,9 +147,27 @@ async function apiSetupCredentials(email: string, documentId: string, password: 
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+function generateTokenCode(): string {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+function createTotpInstance(secret: string, email: string) {
+  return new OTPAuth.TOTP({
+    issuer: 'ProFinance',
+    label: email,
+    algorithm: 'SHA1',
+    digits: 6,
+    period: 30,
+    secret: OTPAuth.Secret.fromBase32(secret),
+  });
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [securityTokens, setSecurityTokens] = useState<SecurityToken[]>([]);
+  const [totpSecret, setTotpSecret] = useState<string | null>(null);
+  const [totpEnabled, setTotpEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   // Restore session on mount
@@ -142,6 +178,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(parsed);
       const storedTxs = localStorage.getItem(`pf_txs_${parsed.email}`);
       setTransactions(storedTxs ? JSON.parse(storedTxs) : generateMockTransactions(parsed.email));
+      const storedTokens = localStorage.getItem(`pf_tokens_${parsed.email}`);
+      setSecurityTokens(storedTokens ? JSON.parse(storedTokens) : []);
+      const storedTotp = localStorage.getItem(`pf_totp_${parsed.email}`);
+      if (storedTotp) {
+        const { secret, enabled } = JSON.parse(storedTotp);
+        setTotpSecret(secret);
+        setTotpEnabled(enabled);
+      }
     }
     setIsLoading(false);
   }, []);
@@ -239,8 +283,73 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [user]);
 
+  const generateTokens = useCallback((count = 5) => {
+    if (!user) return;
+    const newTokens: SecurityToken[] = Array.from({ length: count }, () => ({
+      code: generateTokenCode(),
+      createdAt: new Date().toISOString(),
+      used: false,
+    }));
+    setSecurityTokens(prev => {
+      const updated = [...prev, ...newTokens];
+      localStorage.setItem(`pf_tokens_${user.email}`, JSON.stringify(updated));
+      return updated;
+    });
+  }, [user]);
+
+  const consumeToken = useCallback((code: string): boolean => {
+    if (!user) return false;
+    const token = securityTokens.find(t => t.code === code && !t.used);
+    if (!token) return false;
+    setSecurityTokens(prev => {
+      const updated = prev.map(t => t.code === code ? { ...t, used: true } : t);
+      localStorage.setItem(`pf_tokens_${user.email}`, JSON.stringify(updated));
+      return updated;
+    });
+    return true;
+  }, [user, securityTokens]);
+
+  // ─── TOTP ────────────────────────────────────────────────────────────────────
+
+  const setupTotp = useCallback((): string => {
+    const secret = new OTPAuth.Secret({ size: 20 });
+    const b32 = secret.base32;
+    setTotpSecret(b32);
+    return b32;
+  }, []);
+
+  const getTotpUri = useCallback((): string | null => {
+    if (!totpSecret || !user) return null;
+    const totp = createTotpInstance(totpSecret, user.email);
+    return totp.toString();
+  }, [totpSecret, user]);
+
+  const verifyTotp = useCallback((code: string): boolean => {
+    if (!totpSecret || !user) return false;
+    const totp = createTotpInstance(totpSecret, user.email);
+    // window: 2 allows ±2 periods (±60s) to handle clock drift
+    const delta = totp.validate({ token: code, window: 2 });
+    return delta !== null;
+  }, [totpSecret, user]);
+
+  const enableTotp = useCallback((code: string): boolean => {
+    if (!user || !totpSecret) return false;
+    const valid = verifyTotp(code);
+    if (!valid) return false;
+    setTotpEnabled(true);
+    localStorage.setItem(`pf_totp_${user.email}`, JSON.stringify({ secret: totpSecret, enabled: true }));
+    return true;
+  }, [user, totpSecret, verifyTotp]);
+
+  const disableTotp = useCallback(() => {
+    if (!user) return;
+    setTotpEnabled(false);
+    setTotpSecret(null);
+    localStorage.removeItem(`pf_totp_${user.email}`);
+  }, [user]);
+
   return (
-    <AuthContext.Provider value={{ user, transactions, login, logout, verifyIdentity, setupCredentials, addTransaction, isLoading }}>
+    <AuthContext.Provider value={{ user, transactions, securityTokens, totpSecret, totpEnabled, login, logout, verifyIdentity, setupCredentials, addTransaction, generateTokens, consumeToken, setupTotp, enableTotp, disableTotp, verifyTotp, getTotpUri, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
