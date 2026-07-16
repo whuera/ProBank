@@ -182,7 +182,7 @@ export async function POST(request: NextRequest) {
     const resend = getResendClient();
 
     const { data, error } = await resend.emails.send({
-      from: 'ProFinance <onboarding@resend.dev>',
+      from: 'ProFinance <no-reply@mobilpymes.cl>',
       to: [recipientEmail],
       subject: `Has recibido una transferencia de ${formatCurrency(amount)} - ProFinance`,
       html: buildEmailHtml(payload),
