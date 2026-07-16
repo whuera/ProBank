@@ -88,13 +88,33 @@ export default function TransferenciasPage() {
   };
 
   const executeTransfer = (risk: RiskData) => {
+    const txId = `TX-${Date.now()}`;
+    const now = new Date().toISOString();
+    const amt = parseFloat(amount);
+
     addTransaction({
       type: 'transfer_out',
-      amount: -parseFloat(amount),
+      amount: -amt,
       description: `Transferencia enviada - ${recipient}`,
       status: 'completed',
       counterparty: recipient,
       riskScore: risk.score,
+    });
+
+    // Send email notification to recipient (fire-and-forget)
+    fetch('/api/send-transfer-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        recipientEmail: recipient,
+        senderName: user.name,
+        amount: amt,
+        description: description || undefined,
+        transactionId: txId,
+        date: now,
+      }),
+    }).catch(() => {
+      // Email is non-blocking; silently ignore errors
     });
   };
 
