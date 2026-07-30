@@ -13,24 +13,38 @@ const NAV_ITEMS = [
   { href: '/dashboard/transacciones', label: 'Transacciones', icon: 'fa-list-ul' },
   { href: '/dashboard/transferencias', label: 'Transferencias', icon: 'fa-paper-plane' },
   { href: '/dashboard/depositos', label: 'Depósitos & Inversiones', icon: 'fa-chart-line' },
+  { href: '/dashboard/tarjeta', label: 'Tarjeta VISA', icon: 'fa-credit-card' },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout, isLoading } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);      // mobile slide-in
+  const [collapsed, setCollapsed] = useState(false);          // desktop icon-only
+
+  // Persist collapsed preference
+  useEffect(() => {
+    const stored = localStorage.getItem('pf_sidebar_collapsed');
+    if (stored !== null) setCollapsed(stored === 'true');
+  }, []);
+
+  const toggleCollapsed = () => {
+    setCollapsed(prev => {
+      const next = !prev;
+      localStorage.setItem('pf_sidebar_collapsed', String(next));
+      return next;
+    });
+  };
 
   useEffect(() => {
-    if (!isLoading && !user) {
-      router.push('/login');
-    }
+    if (!isLoading && !user) router.push('/login');
   }, [user, isLoading, router]);
 
-  const handleLogout = () => {
-    logout();
-    router.push('/login');
-  };
+  // Close mobile sidebar on route change
+  useEffect(() => { setSidebarOpen(false); }, [pathname]);
+
+  const handleLogout = () => { logout(); router.push('/login'); };
 
   if (isLoading || !user) {
     return (
@@ -45,19 +59,38 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className={styles.shell}>
-      {/* Animated dark background — same as landing page */}
       <AnimatedBackground />
 
       {/* Mobile overlay */}
-      {sidebarOpen && <div className={styles.mobileOverlay} onClick={() => setSidebarOpen(false)} />}
+      {sidebarOpen && (
+        <div className={styles.mobileOverlay} onClick={() => setSidebarOpen(false)} />
+      )}
 
       {/* Sidebar */}
-      <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`}>
+      <aside className={[
+        styles.sidebar,
+        collapsed ? styles.collapsed : '',
+        sidebarOpen ? styles.sidebarOpen : '',
+      ].join(' ')}>
+
         <div className={styles.sidebarHeader}>
           <Link href="/" className={styles.sidebarLogo}>
             <ProFinanceLogo size={32} />
-            <span className={styles.logoText}>Pro<span className={styles.logoAccent}>Finance</span></span>
+            <span className={styles.logoText}>
+              Pro<span className={styles.logoAccent}>Finance</span>
+            </span>
           </Link>
+
+          {/* Desktop: pin / collapse */}
+          <button
+            className={styles.collapseBtn}
+            onClick={toggleCollapsed}
+            title={collapsed ? 'Expandir menú' : 'Colapsar menú'}
+          >
+            <i className={`fas ${collapsed ? 'fa-angles-right' : 'fa-angles-left'}`} />
+          </button>
+
+          {/* Mobile: close */}
           <button className={styles.closeSidebar} onClick={() => setSidebarOpen(false)}>
             <i className="fas fa-xmark" />
           </button>
@@ -70,10 +103,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               key={item.href}
               href={item.href}
               className={`${styles.navItem} ${pathname === item.href ? styles.navItemActive : ''}`}
-              onClick={() => setSidebarOpen(false)}
+              data-tooltip={item.label}
             >
               <span className={styles.navIcon}><i className={`fas ${item.icon}`} /></span>
-              <span>{item.label}</span>
+              <span className={styles.navLabel}>{item.label}</span>
               {pathname === item.href && <span className={styles.navIndicator} />}
             </Link>
           ))}
@@ -87,17 +120,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <p className={styles.userEmail}>{user.email}</p>
             </div>
           </div>
-          <button className={styles.logoutBtn} onClick={handleLogout}>
-            <i className="fas fa-right-from-bracket" /> Cerrar sesión
+          <button className={styles.logoutBtn} onClick={handleLogout} title="Cerrar sesión">
+            <i className="fas fa-right-from-bracket" />
+            <span className={styles.logoutText}>Cerrar sesión</span>
           </button>
         </div>
       </aside>
 
       {/* Main content */}
-      <div className={styles.main}>
-        {/* Topbar */}
+      <div className={`${styles.main} ${collapsed ? styles.mainCollapsed : ''}`}>
         <header className={styles.topbar}>
           <div className={styles.topbarLeft}>
+            {/* Mobile hamburger */}
             <button className={styles.menuBtn} onClick={() => setSidebarOpen(true)}>
               <i className="fas fa-bars" />
             </button>
@@ -114,7 +148,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </header>
 
-        {/* Page content */}
         <main className={styles.content}>
           {children}
         </main>

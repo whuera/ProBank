@@ -53,7 +53,9 @@
   flex-direction: column;
   z-index: 300;
   box-shadow: 4px 0 32px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
@@ -80,10 +82,25 @@
 
 .closeSidebar {
   display: none; background: none; border: none; color: rgba(255,255,255,0.4);
-  font-size: 1.2rem; cursor: pointer; padding: 4px;
+  font-size: 1.2rem; cursor: pointer; padding: 4px; border-radius: 6px;
+  transition: color 0.2s ease;
 }
+.closeSidebar:hover { color: #fff; }
 
 @media (max-width: 768px) { .closeSidebar { display: block; } }
+
+/* Desktop collapse/pin button */
+.collapseBtn {
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.5); font-size: 0.88rem;
+  cursor: pointer; padding: 8px 10px; border-radius: 8px;
+  transition: all 0.2s ease; flex-shrink: 0;
+  width: 36px; height: 36px;
+}
+.collapseBtn:hover { color: #fff; background: rgba(88, 166, 255, 0.12); border-color: rgba(88, 166, 255, 0.2); }
+
+@media (max-width: 768px) { .collapseBtn { display: none; } }
 
 /* Navigation */
 .sidebarNav { flex: 1; padding: 16px 12px; overflow-y: auto; }
@@ -131,6 +148,12 @@
   color: var(--secondary-color);
 }
 
+.navLabel {
+  flex: 1; min-width: 0;
+  white-space: nowrap; overflow: hidden;
+  transition: opacity 0.2s ease;
+}
+
 .navIndicator {
   position: absolute; right: 0;
   width: 3px; height: 60%; background: var(--secondary-color);
@@ -166,13 +189,15 @@
 .userEmail { color: rgba(255,255,255,0.35); font-size: 0.72rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 .logoutBtn {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
   width: 100%; padding: 10px 14px; border-radius: 10px;
   background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.12);
   color: #f87171; font-size: 0.85rem; font-weight: 500; font-family: inherit;
   cursor: pointer; transition: all 0.3s ease;
 }
 .logoutBtn:hover { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+
+.logoutText { white-space: nowrap; overflow: hidden; transition: opacity 0.2s ease; }
 
 /* ========= MAIN ========= */
 .main {
@@ -183,9 +208,15 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (max-width: 768px) { .main { margin-left: 0; } }
+
+/* Collapsed main (desktop only) */
+@media (min-width: 769px) {
+  .mainCollapsed { margin-left: 64px; }
+}
 
 /* Topbar — Glassmorphism */
 .topbar {
@@ -277,3 +308,82 @@
 
 @media (max-width: 768px) { .content { padding: 20px 16px 32px; } }
 @media (max-width: 480px) { .content { padding: 16px 12px 28px; } }
+
+/* ========= COLLAPSED SIDEBAR (desktop only) ========= */
+@media (min-width: 769px) {
+  .sidebar.collapsed { width: 64px; }
+
+  /* Header: hide logo, center the expand button */
+  .sidebar.collapsed .sidebarHeader {
+    padding: 16px 8px;
+    justify-content: center;
+  }
+  .sidebar.collapsed .sidebarLogo { display: none; }
+
+  /* Hide text elements */
+  .sidebar.collapsed .navSection { opacity: 0; height: 0; padding: 0; overflow: hidden; }
+  .sidebar.collapsed .navLabel { opacity: 0; width: 0; overflow: hidden; }
+  .sidebar.collapsed .navIndicator { display: none; }
+  .sidebar.collapsed .userInfo { opacity: 0; width: 0; overflow: hidden; }
+  .sidebar.collapsed .logoutText { opacity: 0; width: 0; overflow: hidden; }
+
+  /* Center nav items */
+  .sidebar.collapsed .sidebarNav { padding: 16px 8px; }
+  .sidebar.collapsed .navItem { justify-content: center; padding: 11px; gap: 0; }
+  .sidebar.collapsed .navItem:hover { transform: none; }
+  .sidebar.collapsed .navIcon { margin: 0; }
+
+  /* Center footer */
+  .sidebar.collapsed .sidebarFooter { padding: 12px 8px; }
+  .sidebar.collapsed .userCard { justify-content: center; padding: 8px; gap: 0; }
+  .sidebar.collapsed .logoutBtn { padding: 10px; gap: 0; }
+
+  /* Tooltip on nav items when collapsed */
+  .sidebar.collapsed .navItem { position: relative; }
+  .sidebar.collapsed .navItem::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%; transform: translateY(-50%);
+    background: rgba(13, 17, 23, 0.97);
+    border: 1px solid var(--glass-border);
+    color: #f8fafc;
+    font-size: 0.8rem; font-weight: 500;
+    padding: 6px 12px; border-radius: 8px;
+    white-space: nowrap; z-index: 500;
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.15s ease;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  }
+  .sidebar.collapsed .navItem::before {
+    content: '';
+    position: absolute;
+    left: calc(100% + 2px);
+    top: 50%; transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-right-color: rgba(13, 17, 23, 0.97);
+    z-index: 500; pointer-events: none;
+    opacity: 0; transition: opacity 0.15s ease;
+  }
+  .sidebar.collapsed .navItem:hover::after,
+  .sidebar.collapsed .navItem:hover::before { opacity: 1; }
+
+  /* Tooltip on logout button */
+  .sidebar.collapsed .logoutBtn { position: relative; }
+  .sidebar.collapsed .logoutBtn::after {
+    content: 'Cerrar sesión';
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%; transform: translateY(-50%);
+    background: rgba(13, 17, 23, 0.97);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    font-size: 0.8rem; font-weight: 500;
+    padding: 6px 12px; border-radius: 8px;
+    white-space: nowrap; z-index: 500;
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.15s ease;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  }
+  .sidebar.collapsed .logoutBtn:hover::after { opacity: 1; }
+}

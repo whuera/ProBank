@@ -1,0 +1,311 @@
+/* ============================================= */
+/* Tarjeta VISA Virtual — ProFinance Dark Glass  */
+/* ============================================= */
+
+.page {
+  display: flex; flex-direction: column; gap: 28px;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Page header */
+.pageHeader { }
+.pageTitle { font-size: 1.6rem; font-weight: 800; color: #fff; margin: 0 0 6px; letter-spacing: -0.5px; }
+.pageSubtitle { color: #64748b; font-size: 0.88rem; margin: 0; display: flex; align-items: center; gap: 6px; }
+.pageSubtitle i { color: #58a6ff; }
+
+/* ─── No-card state ─────────────────────────────────────────────────────────── */
+.noCardSection {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius); padding: 48px 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+  box-shadow: var(--box-shadow), inset 0 1px 0 rgba(255,255,255,0.04);
+  text-align: center;
+}
+
+.ghostCard {
+  width: 280px; height: 176px; border-radius: 16px;
+  border: 2px dashed rgba(88, 166, 255, 0.2);
+  background: rgba(88, 166, 255, 0.03);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  color: rgba(88, 166, 255, 0.3); font-size: 3rem;
+}
+.ghostCard p { font-size: 0.78rem; color: #334155; margin: 0; font-weight: 600; letter-spacing: 2px; }
+
+.noCardTitle { font-size: 1.2rem; font-weight: 700; color: #f8fafc; margin: 0; }
+.noCardDesc { color: #94a3b8; font-size: 0.88rem; max-width: 440px; line-height: 1.7; margin: 0; }
+
+.noCardFeatures {
+  display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 4px 0;
+}
+.featureChip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 20px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border);
+  color: #94a3b8; font-size: 0.8rem; font-weight: 500;
+}
+.featureChip i { color: #34d399; }
+
+.generateBtn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 32px; border-radius: 12px;
+  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+  border: none; color: #fff; font-size: 1rem; font-weight: 700; font-family: inherit;
+  cursor: pointer; transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+}
+.generateBtn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(59, 130, 246, 0.5); }
+
+/* ─── Card Scene (3D flip) ──────────────────────────────────────────────────── */
+.cardSection {
+  display: flex; flex-direction: column; align-items: center; gap: 24px;
+}
+
+.cardScene {
+  width: 380px; height: 240px;
+  perspective: 1000px;
+}
+
+.cardInner {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.cardInner.flipped { transform: rotateY(180deg); }
+
+.cardFront,
+.cardBack {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* ─── Card Front ────────────────────────────────────────────────────────────── */
+.cardFront {
+  background: linear-gradient(135deg, #1a3a6b 0%, #0d1b3e 55%, #1e1b4b 100%);
+  padding: 22px 24px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+
+/* Decorative wave / circle overlays */
+.cardFront::before {
+  content: '';
+  position: absolute; bottom: -60px; right: -40px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(88, 166, 255, 0.06);
+  pointer-events: none;
+}
+.cardFront::after {
+  content: '';
+  position: absolute; bottom: -30px; right: 20px;
+  width: 140px; height: 140px; border-radius: 50%;
+  background: rgba(139, 92, 246, 0.05);
+  pointer-events: none;
+}
+
+.cardTopRow {
+  display: flex; align-items: flex-start; justify-content: space-between;
+}
+
+.cardChip { z-index: 1; }
+
+.visaLogo {
+  font-size: 1.5rem; font-weight: 900; color: #fff; letter-spacing: -1px;
+  font-style: italic; z-index: 1;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.virtualBadge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 4px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.5); font-size: 0.6rem; font-weight: 700; letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+.cardNumber {
+  font-size: 1.2rem; font-weight: 600; color: #fff; letter-spacing: 3px;
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+.cardBottomRow {
+  display: flex; align-items: flex-end; justify-content: space-between; z-index: 1;
+}
+
+.cardHolder { }
+.cardHolderLabel { font-size: 0.55rem; color: rgba(255,255,255,0.4); letter-spacing: 1px; margin: 0 0 2px; }
+.cardHolderName { font-size: 0.82rem; font-weight: 600; color: #fff; letter-spacing: 1px; margin: 0; }
+
+.cardExpiry { text-align: right; }
+.cardExpiryLabel { font-size: 0.55rem; color: rgba(255,255,255,0.4); letter-spacing: 1px; margin: 0 0 2px; }
+.cardExpiryValue { font-size: 0.9rem; font-weight: 600; color: #fff; margin: 0; font-family: monospace; }
+
+/* ─── Card Back ─────────────────────────────────────────────────────────────── */
+.cardBack {
+  background: linear-gradient(135deg, #0f172a, #1a1a2e, #0d1b3e);
+  transform: rotateY(180deg);
+  display: flex; flex-direction: column;
+}
+
+.magneticStripe {
+  width: 100%; height: 48px;
+  background: linear-gradient(90deg, #111, #1a1a1a, #111);
+  margin-top: 28px;
+}
+
+.signaturePanel {
+  margin: 16px 20px 0;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.03) 2px,
+    transparent 2px,
+    transparent 8px
+  );
+  border-radius: 4px;
+  padding: 10px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+.signatureText {
+  font-size: 0.7rem; color: rgba(255,255,255,0.2); font-style: italic; letter-spacing: 2px;
+}
+
+.cvvBox {
+  background: #fff; border-radius: 4px;
+  padding: 4px 12px;
+  display: flex; align-items: center; gap: 8px;
+  min-width: 80px;
+}
+.cvvLabel { font-size: 0.55rem; color: #64748b; font-weight: 700; letter-spacing: 1px; }
+.cvvValue {
+  font-size: 0.9rem; font-weight: 800; color: #1e293b;
+  font-family: monospace; letter-spacing: 3px;
+}
+.cvvHidden { letter-spacing: 4px; color: #94a3b8; }
+
+.cardBackBottom {
+  margin: auto 20px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.cardBackVisaLogo {
+  font-size: 1.1rem; font-weight: 900; color: rgba(255,255,255,0.4);
+  font-style: italic; letter-spacing: -1px;
+}
+
+.cardBackInfo {
+  text-align: right;
+}
+.cardBackInfoLine { font-size: 0.6rem; color: rgba(255,255,255,0.25); margin: 0; line-height: 1.6; }
+
+/* ─── Card controls ─────────────────────────────────────────────────────────── */
+.cardControls {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center;
+}
+
+.controlBtn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 10px;
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  color: #94a3b8; font-size: 0.85rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: all 0.3s ease;
+}
+.controlBtn:hover { background: rgba(255,255,255,0.08); color: #fff; transform: translateY(-2px); }
+
+.flipBtn { background: rgba(88, 166, 255, 0.08); border-color: rgba(88, 166, 255, 0.15); color: #58a6ff; }
+.flipBtn:hover { background: rgba(88, 166, 255, 0.15); color: #93c5fd; }
+
+.panBtn { background: rgba(167, 139, 250, 0.08); border-color: rgba(167, 139, 250, 0.15); color: #a78bfa; }
+.panBtn:hover { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; }
+
+.cvvBtn { background: rgba(251, 191, 36, 0.08); border-color: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+.cvvBtn:hover { background: rgba(251, 191, 36, 0.15); color: #fde68a; }
+
+.freezeBtn { background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+.freezeBtn:hover { background: rgba(59, 130, 246, 0.15); color: #93c5fd; }
+
+.activateBtn { background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.15); color: #34d399; }
+.activateBtn:hover { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+
+.statusBadge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: 700;
+}
+.statusActive { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+.statusFrozen { background: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2); }
+
+/* ─── Card details grid ─────────────────────────────────────────────────────── */
+.detailsSection {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius); padding: 24px;
+  box-shadow: var(--box-shadow), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.sectionTitle { font-size: 1rem; font-weight: 700; color: #fff; margin: 0 0 18px; }
+
+.detailsGrid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;
+}
+
+.detailItem { }
+.detailLabel { font-size: 0.72rem; color: #64748b; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin: 0 0 4px; }
+.detailValue { font-size: 0.92rem; color: #e2e8f0; font-weight: 600; margin: 0; font-family: monospace; letter-spacing: 1px; }
+.detailValuePlain { font-size: 0.92rem; color: #e2e8f0; font-weight: 600; margin: 0; letter-spacing: 0; font-family: inherit; }
+
+/* ─── Info box ──────────────────────────────────────────────────────────────── */
+.infoSection {
+  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: var(--border-radius); padding: 20px 24px;
+}
+
+.infoTitle {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.92rem; font-weight: 700; color: #60a5fa; margin: 0 0 12px;
+}
+
+.infoList { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.infoList li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 0.84rem; color: #94a3b8; line-height: 1.5;
+}
+.infoList li i { color: #3b82f6; margin-top: 2px; flex-shrink: 0; }
+
+/* ─── Frozen overlay on card ────────────────────────────────────────────────── */
+.frozenOverlay {
+  position: absolute; inset: 0; border-radius: 16px;
+  background: rgba(30, 58, 120, 0.45);
+  backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px;
+  z-index: 10; pointer-events: none;
+}
+.frozenOverlay i { font-size: 2rem; color: #60a5fa; }
+.frozenOverlay span { font-size: 0.85rem; font-weight: 700; color: #93c5fd; letter-spacing: 2px; }
+
+/* ─── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .cardScene { width: 320px; height: 202px; }
+  .cardNumber { font-size: 1rem; letter-spacing: 2px; }
+  .cardHolderName { font-size: 0.75rem; }
+  .ghostCard { width: 240px; height: 152px; }
+}

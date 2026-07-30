@@ -274,7 +274,7 @@ function TotpSetup() {
 }
 
 export default function DashboardPage() {
-  const { user, transactions, securityTokens, generateTokens } = useAuth();
+  const { user, transactions, securityTokens, generateTokens, card } = useAuth();
   const [showAllTokens, setShowAllTokens] = useState(false);
   if (!user) return null;
 
@@ -365,6 +365,36 @@ export default function DashboardPage() {
             <i className="fas fa-chevron-right" />
           </Link>
         </div>
+      </div>
+
+      {/* VISA Card teaser */}
+      <div className={styles.cardTeaser}>
+        <div className={styles.cardTeaserIcon}>
+          <i className="fas fa-credit-card" />
+        </div>
+        <div className={styles.cardTeaserContent}>
+          {card ? (
+            <>
+              <p className={styles.cardTeaserLabel}>Mi Tarjeta VISA Virtual</p>
+              <div className={styles.cardTeaserPreview}>
+                <span className={styles.cardTeaserNumber}>•••• •••• •••• {card.cardNumber.slice(-4)}</span>
+                <span className={`${styles.cardTeaserStatus} ${card.status === 'active' ? styles.statusActive : styles.statusFrozen}`}>
+                  <i className={`fas ${card.status === 'active' ? 'fa-circle-check' : 'fa-snowflake'}`} />
+                  {card.status === 'active' ? 'Activa' : 'Congelada'}
+                </span>
+                <span className={styles.cardTeaserExpiry}>Vence {card.expiryMonth}/{card.expiryYear}</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className={styles.cardTeaserLabel}>Tarjeta de Débito VISA Virtual</p>
+              <p className={styles.cardTeaserDesc}>Genera tu tarjeta virtual gratuita vinculada a tu cuenta corriente</p>
+            </>
+          )}
+        </div>
+        <Link href="/dashboard/tarjeta" className={styles.cardTeaserBtn}>
+          {card ? 'Ver tarjeta' : 'Generar ahora'} <i className="fas fa-arrow-right" />
+        </Link>
       </div>
 
       {/* Risk analysis section */}
