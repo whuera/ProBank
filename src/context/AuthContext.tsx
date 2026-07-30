@@ -34,12 +34,26 @@ export interface SecurityToken {
   used: boolean;
 }
 
+export interface DebitCard {
+  cardNumber: string;
+  cardholderName: string;
+  expiryMonth: string;
+  expiryYear: string;
+  cvv: string;
+  status: 'active' | 'frozen';
+  createdAt: string;
+  linkedAccount: 'checking';
+  network: 'VISA';
+  cardType: 'virtual';
+}
+
 interface AuthContextType {
   user: User | null;
   transactions: Transaction[];
   securityTokens: SecurityToken[];
   totpSecret: string | null;
   totpEnabled: boolean;
+  card: DebitCard | null;
   login: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
   logout: () => void;
   verifyIdentity: (email: string, documentId: string) => Promise<{ success: boolean; message: string }>;
@@ -52,6 +66,8 @@ interface AuthContextType {
   disableTotp: () => void;
   verifyTotp: (code: string) => boolean;
   getTotpUri: () => string | null;
+  generateCard: () => void;
+  toggleCardStatus: () => void;
   isLoading: boolean;
 }
 
@@ -151,6 +167,21 @@ function generateTokenCode(): string {
   return String(Math.floor(100000 + Math.random() * 900000));
 }
 
+function generateLuhnCard(): string {
+  const digits: number[] = [4];
+  for (let i = 1; i < 15; i++) {
+    digits.push(Math.floor(Math.random() * 10));
+  }
+  let sum = 0;
+  for (let i = 0; i < 15; i++) {
+    let d = digits[i];
+    if (i % 2 === 0) { d *= 2; if (d > 9) d -= 9; }
+    sum += d;
+  }
+  digits.push((10 - (sum % 10)) % 10);
+  return digits.join('');
+}
+
 function createTotpInstance(secret: string, email: string) {
   return new OTPAuth.TOTP({
     issuer: 'ProFinance',
@@ -168,6 +199,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [securityTokens, setSecurityTokens] = useState<SecurityToken[]>([]);
   const [totpSecret, setTotpSecret] = useState<string | null>(null);
   const [totpEnabled, setTotpEnabled] = useState(false);
+  const [card, setCard] = useState<DebitCard | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // Restore session on mount
@@ -186,6 +218,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setTotpSecret(secret);
         setTotpEnabled(enabled);
       }
+      const storedCard = localStorage.getItem(`pf_card_${parsed.email}`);
+      if (storedCard) setCard(JSON.parse(storedCard));
     }
     setIsLoading(false);
   }, []);
@@ -223,6 +257,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!storedTxs) localStorage.setItem(`pf_txs_${email}`, JSON.stringify(txs));
       setTransactions(txs);
 
+      const storedCard = localStorage.getItem(`pf_card_${email}`);
+      setCard(storedCard ? JSON.parse(storedCard) : null);
+
       return { success: true, message: 'Bienvenido de vuelta.' };
     } catch {
       return { success: false, message: 'Error de conexión. Intenta nuevamente.' };
@@ -232,6 +269,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(() => {
     setUser(null);
     setTransactions([]);
+    setCard(null);
     localStorage.removeItem('pf_session');
   }, []);
 
@@ -348,8 +386,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem(`pf_totp_${user.email}`);
   }, [user]);
 
+  // ─── Debit Card ──────────────────────────────────────────────────────────────
+
+  const generateCard = useCallback(() => {
+    if (!user) return;
+    const now = new Date();
+    const newCard: DebitCard = {
+      cardNumber: generateLuhnCard(),
+      cardholderName: user.name.toUpperCase(),
+      expiryMonth: String(now.getMonth() + 1).padStart(2, '0'),
+      expiryYear: String((now.getFullYear() + 3) % 100).padStart(2, '0'),
+      cvv: String(Math.floor(100 + Math.random() * 900)),
+      status: 'active',
+      createdAt: now.toISOString(),
+      linkedAccount: 'checking',
+      network: 'VISA',
+      cardType: 'virtual',
+    };
+    setCard(newCard);
+    localStorage.setItem(`pf_card_${user.email}`, JSON.stringify(newCard));
+  }, [user]);
+
+  const toggleCardStatus = useCallback(() => {
+    if (!user || !card) return;
+    const updated: DebitCard = { ...card, status: card.status === 'active' ? 'frozen' : 'active' };
+    setCard(updated);
+    localStorage.setItem(`pf_card_${user.email}`, JSON.stringify(updated));
+  }, [user, card]);
+
   return (
-    <AuthContext.Provider value={{ user, transactions, securityTokens, totpSecret, totpEnabled, login, logout, verifyIdentity, setupCredentials, addTransaction, generateTokens, consumeToken, setupTotp, enableTotp, disableTotp, verifyTotp, getTotpUri, isLoading }}>
+    <AuthContext.Provider value={{ user, transactions, securityTokens, totpSecret, totpEnabled, card, login, logout, verifyIdentity, setupCredentials, addTransaction, generateTokens, consumeToken, setupTotp, enableTotp, disableTotp, verifyTotp, getTotpUri, generateCard, toggleCardStatus, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
