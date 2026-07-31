@@ -148,6 +148,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </header>
 
+        {/* Fade-out zone: content dissolves as it approaches the topbar */}
+        <div className={styles.fadeEdge} aria-hidden="true" />
+
         <main className={styles.content}>
           {children}
         </main>
